@@ -53,8 +53,8 @@ class FileService {
   /// when the app runs, check app directory if exists and create it.
   Future<bool> checkAppDirectory() async {
     print('check app directory');
-    rootDirectory = await getExternalStorageDirectory();
     try {
+      rootDirectory = await getExternalStorageDirectory();
       String path = join(rootDirectory.path, app_path);
       print('the app path is $path');
       if (await createDirectory(path)) {
@@ -147,7 +147,7 @@ class FileService {
   /// valid only after checkAppDirectory has been called.
   bool canUp(FileSystemEntity currentEntity) {
     print(
-        'current: $currentEntity root: $rootDirectory ${currentEntity?.path != rootDirectory.path}');
+        'current: $currentEntity root: $rootDirectory, isEqual: ${currentEntity?.path?.compareTo(rootDirectory?.path) == 0}');
     return null != currentEntity &&
         currentEntity.path != rootDirectory.path &&
         currentEntity.path.length >= rootDirectory.path.length;
