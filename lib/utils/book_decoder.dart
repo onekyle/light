@@ -32,8 +32,10 @@ class BookDecoder {
           break;
         case FileType.EPUB:
           // todo: decode in second isolate
-          data = await compute<String, Map<String, dynamic>>(
-              _decodeEpub, book.uri);
+          // var smthing = await _decodeEpub(book.uri);
+          // var dep_ = await _decodeEpub;
+          data = await (await compute<String, Future<Map<String, String>>>(
+              _decodeEpub, book.uri));
           print(data['chapters']);
           if (null != data['chapters']) {
             data['chapters'] = jsonDecode(data['chapters'])
@@ -42,6 +44,7 @@ class BookDecoder {
           }
           break;
         default:
+          break;
       }
       print('decode complete');
     } catch (e) {
@@ -108,7 +111,7 @@ Map<String, dynamic> _decodeText(String uri) {
   }
 }
 
-Map<String, dynamic> _decodeEpub(String uri) {
+Future<Map<String, String>> _decodeEpub(String uri) async {
   try {
     print('decode epub...');
     File targetFile = new File(uri);
@@ -117,7 +120,7 @@ Map<String, dynamic> _decodeEpub(String uri) {
     List<Map> chapters = <Map>[];
 
     // Opens a book and reads all of its content into the memory
-    EpubBook epubBook = EpubReader.readBookSync(bytes);
+    var epubBook = await EpubReader.readBook(bytes);
 
 //    content = epubBook.Content.toString();
     epubBook.Chapters?.forEach((EpubChapter chapter) {

@@ -9,20 +9,24 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: "^0.1.0"
   url_launcher: "^3.0.0"
-  shared_preferences: "^0.4.1"
-  simple_permissions: "^0.1.2"
+  shared_preferences: ^0.5.1+2
+  simple_permissions: ^0.1.9
   path_provider: "^0.4.0"
   path: "^1.5.1"
   html: "^0.13.3"
   epub:
     git:
-      url: https://github.com/creatint/dart-epub-cn
-      ref: e414f4f018d9b5c6239e9a391a01bf6ef679a5d2
+      url: https://github.com/orthros/dart-epub.git
+      ref: 0e0c3eecff36c1f0ef6d83453ffc13d37a61e3c3
+      # url: https://github.com/creatint/dart-epub-cn
+      # ref: e414f4f018d9b5c6239e9a391a01bf6ef679a5d2
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
+evvironment:
+  sdk: ">=2.0.0-dev.68.0 <3.0.0"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://www.dartlang.org/tools/pub/pubspec

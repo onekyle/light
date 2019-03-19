@@ -109,8 +109,8 @@ class FileService {
       }
 
       /// check write permission
-      bool havePermission = await SimplePermissions
-          .checkPermission(Permission.WriteExternalStorage);
+      bool havePermission = await SimplePermissions.checkPermission(
+          Permission.WriteExternalStorage);
 
       if (true == havePermission) {
         // have write permission
@@ -119,13 +119,17 @@ class FileService {
       } else {
         /// have not wirte permission, request it
         print('have not write permission, request it');
-        bool requestPermission = await SimplePermissions
-            .requestPermission(Permission.WriteExternalStorage);
-        if (true == requestPermission) {
-          print('request external directroy permission successful.');
-          _havePermission = true;
-        } else {
-          print('request external directroy permission failed.');
+        PermissionStatus requestPermissionStatus =
+            await SimplePermissions.requestPermission(
+                Permission.WriteExternalStorage);
+        switch (requestPermissionStatus) {
+          case PermissionStatus.authorized:
+            _havePermission = true;
+            print('request external directory permission successful.');
+            break;
+          default:
+            print('request external directroy permission failed.');
+            break;
         }
       }
     } else if (service.isIOS) {
@@ -142,8 +146,8 @@ class FileService {
 
   /// valid only after checkAppDirectory has been called.
   bool canUp(FileSystemEntity currentEntity) {
-    print('current: $currentEntity root: $rootDirectory ${currentEntity?.path !=
-        rootDirectory.path}');
+    print(
+        'current: $currentEntity root: $rootDirectory ${currentEntity?.path != rootDirectory.path}');
     return null != currentEntity &&
         currentEntity.path != rootDirectory.path &&
         currentEntity.path.length >= rootDirectory.path.length;
@@ -167,7 +171,8 @@ class FileService {
       /// multi directories
       List<FileSystemEntity> list = <FileSystemEntity>[];
       directories.forEach((FileSystemEntity directory) async {
-        List<FileSystemEntity> tmp = await getEntities(directory, recursive: recursive);
+        List<FileSystemEntity> tmp =
+            await getEntities(directory, recursive: recursive);
         if (null != tmp) {
           list.addAll(tmp);
         }
