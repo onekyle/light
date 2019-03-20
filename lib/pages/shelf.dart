@@ -1,8 +1,11 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'reader/reader.dart';
 import '../services/system.dart';
 import '../models/book.dart';
 import '../widgets/book_item.dart';
+import 'import_local.dart';
 
 class Shelf extends StatefulWidget {
   Shelf({@override this.scaffoldKey});
@@ -69,7 +72,8 @@ class _ShelfState extends State<Shelf> {
       update(book);
     } else {
       /// jump to reader
-      Navigator.push(context, new MaterialPageRoute(builder: (BuildContext context){
+      Navigator.push(context,
+          new MaterialPageRoute(builder: (BuildContext context) {
         return new Reader(book: book);
       }));
     }
@@ -216,6 +220,16 @@ class _ShelfState extends State<Shelf> {
                   child: buildBottomBar(),
                 )
               ],
+            ),
+          ),
+          new Offstage(
+            offstage: false,
+            child: FloatingActionButton(
+              onPressed: () {
+                // var book1 = File("/Users/durand/Downloads/乌合之众：大众心理研究\(kindle正版\).epub");
+                var book = File("/Users/durand/Downloads/yctest.txt");
+                ImportLocal.importBooksFromSelected([book]);
+              },
             ),
           ),
         ],

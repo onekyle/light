@@ -78,9 +78,7 @@ class LightEngine {
         print('flag2');
         if (null == _pagination) {
           _pagination = new Pagination(
-              book: _book,
-              bookDecoder: _decoder,
-              size: _pageSize);
+              book: _book, bookDecoder: _decoder, size: _pageSize);
           _pagination.init(pagingHashCode);
         }
         _pageController = new PageController();

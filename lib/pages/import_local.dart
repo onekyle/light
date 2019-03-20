@@ -7,6 +7,19 @@ import '../widgets/file_item.dart';
 import '../utils/utils.dart';
 
 class ImportLocal extends StatefulWidget {
+  static void importBooksFromSelected(List<FileSystemEntity> list) async {
+    if (list.length <= 0) {
+      return;
+    } else {
+      int importCount =
+          await SystemService().bookService.importLocalBooks(list);
+      print(importCount);
+      print('refresh shelf');
+      SystemService().send(['refreshShelf']);
+      return;
+    }
+  }
+
   @override
   _ImportLocalState createState() => _ImportLocalState();
 }
